@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./google-functions.component.css']
 })
 export class GoogleFunctionsComponent implements OnInit {
-
+  headerMessage: string = 'Test Url';
+  url: string;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onTestUrl(){
+    alert(this.url);
   }
 
 }

@@ -12,4 +12,8 @@ export class GoogleMainComponent implements OnInit {
   ngOnInit() {
   }
 
+  onCallFunctionsApi(url: string){
+    alert('calling:' + url);
+  }
+
 }
