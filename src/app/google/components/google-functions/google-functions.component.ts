@@ -9,14 +9,33 @@ import {GoogleApiService} from '../../services/google-api.service';
 export class GoogleFunctionsComponent implements OnInit {
   headerMessage: string = 'Test Url';
   url: string;
+  result: string;
   constructor(private googleApiService: GoogleApiService) { }
 
   ngOnInit() {
   }
 
-  async onTestUrl(){
+  /**
+   *  this is not working
+   *
+   */
+  async onTestUrlSync(){
     const result = await this.googleApiService.testGoogleFunction(this.url);
     alert('result:' + result );
 
+  }
+
+  /**
+   * Working
+   *
+   *
+   */
+
+  onTestUrl(){
+    const result =  this.googleApiService.testGoogleFunctionAsync(this.url)
+      .subscribe((data)=>{
+        alert('data:' + data);
+        console.log('data', data);
+      });
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class GoogleApiService {
     } catch (e) {
       console.log('error getting contacts', e);
     }
+
+  }
+
+  public testGoogleFunctionAsync(url:string): Observable<any> {
+    return this.http.get<any>(url);
+
 
   }
 }
