@@ -13,7 +13,7 @@
           #urlForm="ngForm">
       <mat-form-field>
         <input matInput
-               name="firstName"
+               name="url"
                type="text"
                [(ngModel)]="url"
                #urlInput="ngModel"
@@ -22,6 +22,14 @@
         <mat-error *ngIf="urlInput.invalid">Url Required</mat-error>
       </mat-form-field>
 
+      <mat-form-field >
+        <textarea matInput
+                  class="text-area"
+                  disabled
+                  name="result"
+                  [(ngModel)]="result"
+                  placeholder="Result"></textarea>
+      </mat-form-field>
       <mat-action-row>
         <button mat-raised-button
                 [disabled]="urlForm.invalid"

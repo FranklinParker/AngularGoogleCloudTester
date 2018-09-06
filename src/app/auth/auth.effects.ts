@@ -49,7 +49,7 @@ export class AuthEffects {
     tap(action => {
       localStorage.clear();
       clearTimeout(this.tokenTimer);
-      this.router.navigate(['/login']);
+      this.router.navigate(['/google']);
 
     })
   );

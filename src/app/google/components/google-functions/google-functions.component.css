@@ -14,3 +14,7 @@ mat-card{
 button{
   margin-left: 1rem;
 }
+
+.text-area{
+  height: 400px;
+}

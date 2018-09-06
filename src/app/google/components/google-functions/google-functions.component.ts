@@ -34,8 +34,9 @@ export class GoogleFunctionsComponent implements OnInit {
   onTestUrl(){
     const result =  this.googleApiService.testGoogleFunctionAsync(this.url)
       .subscribe((data)=>{
-        alert('data:' + data);
-        console.log('data', data);
+
+        this.result = JSON.stringify(data,null, 2);
+
       });
   }
 }
