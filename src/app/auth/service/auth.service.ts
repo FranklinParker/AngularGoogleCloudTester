@@ -18,7 +18,7 @@ import {AttemptLogin, Login, Logout} from "../auth.actions";
 })
 export class AuthService {
 
-  private registerUrl = environment.apiUrl + 'register';
+  private registerUrl = environment.apiRegister;
   private loginUrl = environment.apiUrl + 'login';
 
   constructor(private http: HttpClient,
