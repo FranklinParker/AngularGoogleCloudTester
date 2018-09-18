@@ -16,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import {EffectsModule} from "@ngrx/effects";
 import {GoogleModule} from './google/google.module';
+import {ContactModule} from './contact/contact.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {GoogleModule} from './google/google.module';
     BrowserAnimationsModule,
     MaterialModule,
     CoreModule,
+    ContactModule,
     GoogleModule,
     EffectsModule.forRoot([]),
     StoreModule.forRoot(reducers, { metaReducers }),

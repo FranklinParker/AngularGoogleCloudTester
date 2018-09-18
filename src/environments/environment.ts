@@ -5,9 +5,9 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api/',
-  apiRegister: '',
-  apiLogin: '',
-  apiContact: ''
+  apiRegister: 'https://us-central1-tsae-cloud-functions-poc.cloudfunctions.net/contacts/register',
+  apiLogin: 'https://us-central1-tsae-cloud-functions-poc.cloudfunctions.net/contacts/login',
+  apiContact: 'https://us-central1-tsae-cloud-functions-poc.cloudfunctions.net/contacts/'
 };
 
 /*
