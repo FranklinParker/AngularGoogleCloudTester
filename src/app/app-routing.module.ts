@@ -5,6 +5,7 @@ import {SignupComponent} from "./auth/components/signup/signup.component";
 import {HomeComponent} from "./core/components/home/home.component";
 import {AuthGuard} from "./auth/service/auth.guard";
 import {GoogleMainComponent} from './google/components/google-main/google-main.component';
+import {ContactMainComponent} from './contact/components/contact-main/contact-main.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,12 @@ const routes: Routes = [
   {
     path: '',
     component: GoogleMainComponent
-  }
+  },
+  {
+    path:'contact',
+    component: ContactMainComponent,
+    canActivate: [AuthGuard]
+  },
 
 ];
 

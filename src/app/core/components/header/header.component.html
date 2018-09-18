@@ -11,6 +11,12 @@
   </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxShow.gt-sm="true"
        fxShow="false">
+    <ul *ngIf="loggedInUser" fxLayout fxLayoutGap="10px"
+        class="navigation-list-items">
+      <li><a routerLink="/contact" mat-button
+             routerLinkActive="mat-accent">Contacts</a>
+      </li>
+    </ul>
     <ul *ngIf="!loggedInUser" fxLayout fxLayoutGap="10px" class="navigation-list-items">
       <li><a routerLink="/google" mat-button
              routerLinkActive="mat-accent">Test Google Cloud</a>
