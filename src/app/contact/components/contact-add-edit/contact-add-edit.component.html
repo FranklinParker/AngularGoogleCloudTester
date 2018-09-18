@@ -42,6 +42,38 @@
                placeholder="Enter Email">
         <mat-error *ngIf="emailInput.invalid">Please enter valid email</mat-error>
       </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               name="address"
+               type="text"
+               [(ngModel)]="contact.address"
+               #emailInput="ngModel"
+               placeholder="Enter Street Adress">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               name="city"
+               type="text"
+               [(ngModel)]="contact.city"
+               #emailInput="ngModel"
+               placeholder="Enter City">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               name="state"
+               type="text"
+               [(ngModel)]="contact.state"
+               #emailInput="ngModel"
+               placeholder="Enter State">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput
+               name="zip"
+               type="text"
+               [(ngModel)]="contact.zip"
+               #emailInput="ngModel"
+               placeholder="Enter Zip">
+      </mat-form-field>
       <mat-action-row>
         <button mat-raised-button
                 [disabled]="contactForm.invalid"
@@ -51,7 +83,7 @@
                 type="button"
                 *ngIf="isEditing"
                 (click)="onSetToNewContact()"
-                color="warn" >Add New
+                color="warn">Add New
         </button>
       </mat-action-row>
 
