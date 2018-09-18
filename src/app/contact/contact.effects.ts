@@ -18,6 +18,7 @@ export class ContactEffects {
     ofType<LoadAllContacts>(ContactActionTypes.LoadAllContactsAction),
     withLatestFrom(this.store.pipe(select(isContactsLoaded))),
     filter(([action, isContactsLoaded]) => {
+      console.log('isContactsLoaded:'+ isContactsLoaded);
       return !isContactsLoaded;
     }),
     mergeMap(async () => {
