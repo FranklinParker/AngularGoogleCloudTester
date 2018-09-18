@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {tap} from "rxjs/operators";
-import {ContactActionTypes, ContactsLoaded, LoadAllContacts} from "./contact.actions";
+import {ContactActionTypes, ContactsLoaded, ContactsWaitingTobeLoaded, LoadAllContacts} from './contact.actions';
 import {container} from "@angular/core/src/render3/instructions";
 import {filter, map, mergeMap, withLatestFrom} from "rxjs/internal/operators";
 import {select, Store} from "@ngrx/store";
@@ -22,8 +22,8 @@ export class ContactEffects {
       return !isContactsLoaded;
     }),
     mergeMap(async () => {
-      const contacts = await this.contactService.getAllContacts();
-      return new ContactsLoaded({contacts: contacts});
+     this.contactService.getContacts();
+     return new ContactsWaitingTobeLoaded();
 
     })
   );

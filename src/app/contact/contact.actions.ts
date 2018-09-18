@@ -6,7 +6,9 @@ export enum ContactActionTypes {
   LoadAllContactsAction = '[LoadAllContactsAction] Load Contacts',
   ContactsLoadedAction = '[ContactsLoaded] Contacts Loaded',
   ContactSavedAction = '[ContactSaved] Contact',
-  NewContactSavedAction = '[NewContactSavedAction] Save new'
+  NewContactSavedAction = '[NewContactSavedAction] Save new',
+  ContactsWaitingTobeLoaded = '[ContactsWaitingTobeLoaded] waiting'
+
 
 }
 
@@ -20,6 +22,11 @@ export class ContactsLoaded implements Action {
   constructor(public payload: { contacts:Contact[]}){
 
   }
+}
+
+export class ContactsWaitingTobeLoaded implements Action {
+  readonly type = ContactActionTypes.ContactsWaitingTobeLoaded;
+
 }
 
 
