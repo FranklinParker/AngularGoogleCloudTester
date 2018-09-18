@@ -47,11 +47,11 @@ export class ContactAddEditComponent implements OnInit {
    * @param {NgForm} form
    * @returns {Promise<void>}
    */
-  async onSubmit(form: NgForm) {
+   onSubmit(form: NgForm) {
     if (this.contact.id === null) {
-      await this.saveNewContact();
+       this.saveNewContact();
     }else {
-      await this.updateExistingContact();
+       //this.updateExistingContact();
     }
   }
 
@@ -70,19 +70,23 @@ export class ContactAddEditComponent implements OnInit {
    * @returns {Promise<void>}
    */
 
-  private async saveNewContact() {
-    const result: { success: boolean, message?: string, record?: Contact } = await this.contactService.saveNewContact(this.contact);
-    if (result.success) {
+  private saveNewContact() {
+    this.contactService.saveNewContact(this.contact)
+      .subscribe((result)=>{
+        console.log('result', result);
+        if (result.success) {
 
-      this.store.dispatch(new NewContactSaved({ contact: result.record}));
-      this.snackBar.open('New Contact Saved!', '', {
-        duration: 5000
-      });
-    } else {
-      this.snackBar.open(result.message, 'Error Saving Contact', {
-        duration: 9000
-      });
-    }
+          this.store.dispatch(new NewContactSaved({ contact: result.record}));
+          this.snackBar.open('New Contact Saved!', '', {
+            duration: 5000
+          });
+        } else {
+          this.snackBar.open(result.message, 'Error Saving Contact', {
+            duration: 9000
+          });
+        }
+        });
+
   }
 
   /**

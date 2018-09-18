@@ -3,7 +3,7 @@ import {environment} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Contact} from '../model/contact';
-import {Subject} from 'rxjs/index';
+import {Observable, Subject} from 'rxjs/index';
 import {getAllContacts} from '../contact.selector';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../reducers';
@@ -14,7 +14,7 @@ import {ContactsLoaded} from '../contact.actions';
 })
 export class ContactService {
   getUrl = environment.apiContactBase + '/getContacts';
-  postUrl = environment.apiContactBase + '/contact';
+  saveNewUrl = environment.apiContactBase + '/addContact';
   contactList: Contact[] = [];
   private contactListSubject = new Subject<{ numberRecords: number, contacts: Contact[] }>();
 
@@ -37,7 +37,7 @@ export class ContactService {
     this.http.get<{ success: boolean, records: any, numberRecords: number }>(url)
       .pipe(map(contactData => {
         console.log('contactData', contactData);
-        this.store.dispatch(new ContactsLoaded({contacts:contactData.records}))
+        this.store.dispatch(new ContactsLoaded({contacts: contactData.records}));
         return 'done';
       })).subscribe((result) => console.log(result));
 
@@ -84,8 +84,6 @@ export class ContactService {
   }
 
 
-
-
   /**
    * listens to changes in the contact list subject
    *
@@ -95,65 +93,18 @@ export class ContactService {
     return this.contactListSubject.asObservable();
   }
 
-
   /**
    *
-   * save a new contact
-   *
-   * @param {Contact} contact
-   * @returns {Promise<any>}
+   * @param contact
    */
-  async saveNewContact(contact: Contact): Promise<{ success: boolean, message?: string, record?: Contact }> {
-    try {
-      const result =
-        await this.http.post<{ success: boolean, record?: any, numberRecords?: number, message?: string }>
-        (this.postUrl, contact)
-          .pipe(map(result => {
-            if (result.success) {
-              return {
-                success: result.success,
-                numberRecords: result.numberRecords,
-                record: {
-                  id: result.record.id,
-                  firstName: result.record.firstName,
-                  lastName: result.record.lastName,
-                  email: result.record.email,
-                  address: result.record.address,
-                  street: result.record.street,
-                  zip: result.record.zip,
-                  city: result.record.city
+  public saveNewContact(contact: Contact): Observable<{ success: boolean, message?: string, record?: Contact }> {
 
-
-                }
-
-              };
-            } else {
-              return {
-                success: result.success,
-                message: result.message
-
-              };
-            }
-
-          })).toPromise();
-      console.log('contact new save result', result);
-      if (result.success) {
-        this.contactList.push(result.record);
-        this.contactListSubject.next(
-          {
-            numberRecords: result.numberRecords,
-            contacts: this.contactList
-          });
-      }
+    return this.http.post<{ success: boolean, record?: any, numberRecords?: number, message?: string }>
+    (this.saveNewUrl, contact).pipe(map(result => {
       return result;
-    } catch (e) {
-      console.log('error saving contact-add-edit', e);
-      return {
-        success: false,
-        message: 'System Error Saving Record'
-      };
+    }));
 
-    }
+
   }
 
 
@@ -166,7 +117,7 @@ export class ContactService {
    */
   async updateExistingContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
     try {
-      const result = await this.http.put<any>(this.postUrl,
+      const result = await this.http.put<any>(this.saveNewUrl,
         contact
       )
         .pipe(map(result => {
