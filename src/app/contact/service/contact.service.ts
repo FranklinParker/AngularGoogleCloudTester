@@ -15,6 +15,7 @@ import {ContactsLoaded} from '../contact.actions';
 export class ContactService {
   getUrl = environment.apiContactBase + '/getContacts';
   saveNewUrl = environment.apiContactBase + '/addContact';
+  updateUrl = environment.apiContactBase + '/updateContact';
   contactList: Contact[] = [];
   private contactListSubject = new Subject<{ numberRecords: number, contacts: Contact[] }>();
 
@@ -40,45 +41,6 @@ export class ContactService {
         this.store.dispatch(new ContactsLoaded({contacts: contactData.records}));
         return 'done';
       })).subscribe((result) => console.log(result));
-
-
-  }
-
-  /**
-   * get contact records and number of records
-   *
-   * @returns {Promise<any>}
-   */
-  async getAllContacts(): Promise<any> {
-
-    const url = this.getUrl;
-    try {
-      const data: { numberRecords: number, contacts: Contact[] } = await
-        this.http.get<{ success: boolean, records: any, numberRecords: number }>(url)
-          .pipe(map(contactData => {
-            console.log(contactData, contactData);
-            return {
-              numberRecords: contactData.numberRecords,
-              contacts: contactData.records.map(record => {
-                return {
-                  id: record.id,
-                  lastName: record.lastName,
-                  firstName: record.firstName,
-                  address: record.address,
-                  city: record.city,
-                  state: record.state,
-                  zip: record.zip,
-                  email: record.email
-                };
-              })
-            };
-          })).toPromise();
-      return data.contacts;
-
-    } catch (e) {
-      console.log('error getting contacts', e);
-      return [];
-    }
 
 
   }
@@ -113,25 +75,14 @@ export class ContactService {
    * updates an existing contact
    *
    * @param {Contact} contact
-   * @returns {Promise<any>}
+   * @returns {Observable<any>}
    */
-  async updateExistingContact(contact: Contact): Promise<{ success: boolean, message?: string }> {
-    try {
-      const result = await this.http.put<any>(this.saveNewUrl,
-        contact
-      )
-        .pipe(map(result => {
-          return result;
-        })).toPromise();
-      console.log('contact update save result', result);
-      return result;
-    } catch (e) {
-      console.log('error saving contact', e);
-      return {
-        success: false,
-        message: 'System Error Saving Record'
-      };
+  public updateExistingContact(contact: Contact): Observable<{ success: boolean, message?: string }> {
 
-    }
+    return this.http.post<any>(this.updateUrl, contact)
+      .pipe(map(result => {
+        return result;
+      }));
+
   }
 }

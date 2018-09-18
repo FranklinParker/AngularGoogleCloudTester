@@ -92,18 +92,19 @@ export class ContactAddEditComponent implements OnInit {
   /**
    * Updates an existing contact
    *
-   * @returns {Promise<void>}
    */
-  private async updateExistingContact() {
-    const result: { success: boolean, message?: string } = await this.contactService.updateExistingContact(this.contact);
-    if (result.success) {
-      this.snackBar.open('Contact Updated!', '', {
-        duration: 5000
+  private updateExistingContact() {
+    this.contactService.updateExistingContact(this.contact)
+      .subscribe((result) => {
+        if (result.success) {
+          this.snackBar.open('Contact Updated!', '', {
+            duration: 5000
+          });
+        } else {
+          this.snackBar.open(result.message, 'Error Saving Contact', {
+            duration: 9000
+          });
+        }
       });
-    } else {
-      this.snackBar.open(result.message, 'Error Saving Contact', {
-        duration: 9000
-      });
-    }
   }
 }
