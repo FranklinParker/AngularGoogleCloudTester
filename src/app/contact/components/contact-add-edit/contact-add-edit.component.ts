@@ -51,7 +51,7 @@ export class ContactAddEditComponent implements OnInit {
     if (this.contact.id === null) {
        this.saveNewContact();
     }else {
-       //this.updateExistingContact();
+       this.updateExistingContact();
     }
   }
 
