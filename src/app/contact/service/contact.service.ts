@@ -13,8 +13,8 @@ import {ContactsLoaded} from '../contact.actions';
   providedIn: 'root'
 })
 export class ContactService {
-  getUrl = environment.apiContact + 'getContacts';
-  postUrl = environment.apiContact + 'contact';
+  getUrl = environment.apiContactBase + '/getContacts';
+  postUrl = environment.apiContactBase + '/contact';
   contactList: Contact[] = [];
   private contactListSubject = new Subject<{ numberRecords: number, contacts: Contact[] }>();
 
