@@ -5,8 +5,7 @@ import {ContactService} from "../../service/contact.service";
 import {MatSnackBar} from "@angular/material";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../reducers";
-import {ContactSaved, NewContactSaved} from "../../contact.actions";
-import {Update} from "@ngrx/entity";
+import {NewContactSaved} from '../../contact.actions';
 
 @Component({
   selector: 'app-contact',
