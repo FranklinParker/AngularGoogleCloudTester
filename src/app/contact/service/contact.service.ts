@@ -13,9 +13,8 @@ import {ContactsLoaded} from '../contact.actions';
   providedIn: 'root'
 })
 export class ContactService {
-  getUrl = environment.apiContactBase + '/getContacts';
-  saveNewUrl = environment.apiContactBase + '/addContact';
-  updateUrl = environment.apiContactBase + '/updateContact';
+  url = environment.apiContactBase + '/contacts';
+
   contactList: Contact[] = [];
   private contactListSubject = new Subject<{ numberRecords: number, contacts: Contact[] }>();
 
@@ -33,7 +32,7 @@ export class ContactService {
 
     const queryParams = `?pageSize=${pageSize}&currentPage=${currentPage}`;
     console.log('queryParams', queryParams);
-    const url = this.getUrl + queryParams;
+    const url = this.url + queryParams;
 
     this.http.get<{ success: boolean, records: any, numberRecords: number }>(url)
       .pipe(map(contactData => {
@@ -62,7 +61,7 @@ export class ContactService {
   public saveNewContact(contact: Contact): Observable<{ success: boolean, message?: string, record?: Contact }> {
 
     return this.http.post<{ success: boolean, record?: any, numberRecords?: number, message?: string }>
-    (this.saveNewUrl, contact).pipe(map(result => {
+    (this.url, contact).pipe(map(result => {
       return result;
     }));
 
@@ -79,7 +78,7 @@ export class ContactService {
    */
   public updateExistingContact(contact: Contact): Observable<{ success: boolean, message?: string }> {
 
-    return this.http.post<any>(this.updateUrl, contact)
+    return this.http.put<any>(this.url, contact)
       .pipe(map(result => {
         return result;
       }));

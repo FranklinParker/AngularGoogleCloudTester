@@ -19,7 +19,7 @@ import {AttemptLogin, Login, Logout} from "../auth.actions";
 export class AuthService {
 
   private registerUrl = environment.apiContactBase +'/register';
-  private loginUrl = environment.apiContactBase  + '/login';
+  private loginUrl = environment.apiContactBase  + '/auth';
 
   constructor(private http: HttpClient,
               private router: Router,
